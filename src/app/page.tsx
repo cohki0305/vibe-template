@@ -1,10 +1,10 @@
+import { UserPageView } from '@/views/user-page-view'
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1 className="text-4xl font-bold mb-4">Welcome to Vibe Template</h1>
-      <p className="text-lg text-muted-foreground">
-        A Next.js App Router starter with TypeScript, Tailwind CSS, and more.
-      </p>
+    <main className="container mx-auto max-w-4xl p-8">
+      <h1 className="text-3xl font-bold mb-8">Vibe Template</h1>
+      <UserPageView />
     </main>
   )
 }

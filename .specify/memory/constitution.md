@@ -209,16 +209,30 @@ function Form() {
 
 ### IX. 状態管理
 
-- **基本方針**: Server Componentsでデータ取得 → propsで渡す
+- **データフェッチ**: SWRを使用してクライアント側でデータ取得・キャッシュ管理
 - **クライアント状態**: `useState` で局所的に管理（最小限に）
 - **Jotai（必要な場合のみ）**: 複数コンポーネント間で共有が必要なUI状態（テーマ、モーダル等）
 
 ```typescript
-// 基本: propsで渡す
-// Server Component
-async function Page() {
-  const data = await fetchData()
-  return <ClientComponent data={data} />
+// SWRでデータフェッチ
+import useSWR from 'swr'
+import { getUsers, createUserAction, deleteUser } from '@/actions/user'
+
+function UserPageView() {
+  const { data: users, error, isLoading, mutate } = useSWR('users', getUsers)
+
+  const handleCreate = async (formData: FormData) => {
+    const result = await createUserAction(prevState, formData)
+    if (result.success) {
+      mutate() // キャッシュを更新 → 自動で再フェッチ
+    }
+    return result
+  }
+
+  const handleDelete = async (id: string) => {
+    await deleteUser(id)
+    mutate()
+  }
 }
 
 // 必要な場合のみJotai（例: テーマ切り替え）
@@ -226,7 +240,7 @@ async function Page() {
 export const themeAtom = atom<'light' | 'dark'>('light')
 ```
 
-**根拠**: Server Componentsを活用し、クライアント状態を最小化することでシンプルさを維持。
+**根拠**: SWRによりキャッシュ管理・再フェッチ・ローディング状態が自動化され、手動のstate管理が不要になる。
 
 ### X. エラーハンドリング
 
@@ -308,6 +322,7 @@ if (!result.success) {
 | UI Components    | shadcn/ui                                   | アクセシブルなUIコンポーネント  |
 | Validation       | Zod                                         | スキーマ検証                    |
 | Form             | useActionState + react-hook-form (optional) | フォーム状態管理                |
+| Data Fetching    | SWR                                         | データフェッチ・キャッシュ管理  |
 | State Management | Jotai (optional)                            | グローバルUI状態（必要時のみ）  |
 | ORM              | Prisma                                      | データベースアクセス            |
 | Authentication   | Better Auth                                 | 認証・認可                      |
