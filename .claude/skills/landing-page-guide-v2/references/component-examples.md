@@ -179,7 +179,7 @@ export default function Benefits() {
             업계 최고의 기능과 서비스로 여러분의 성공을 지원합니다
           </p>
         </div>
-        
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {benefits.map((benefit, index) => (
             <Card key={index} className="hover:shadow-lg transition-all duration-300 border-none">
@@ -254,13 +254,13 @@ export default function Testimonials() {
             5,000개 이상의 팀이 우리 제품으로 성공하고 있습니다
           </p>
         </div>
-        
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.map((testimonial, index) => (
             <Card key={index} className="hover:shadow-lg transition-all duration-300">
               <CardContent className="pt-6">
                 <Quote className="w-8 h-8 text-blue-600 mb-4 opacity-50" />
-                
+
                 {/* Rating */}
                 <div className="flex mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
@@ -273,12 +273,12 @@ export default function Testimonials() {
                     </svg>
                   ))}
                 </div>
-                
+
                 {/* Content */}
                 <p className="text-gray-700 mb-6 leading-relaxed">
                   "{testimonial.content}"
                 </p>
-                
+
                 {/* Author */}
                 <div className="flex items-center gap-3 pt-4 border-t">
                   <Avatar>
@@ -345,11 +345,11 @@ export default function FAQ() {
             궁금하신 점이 있으시면 언제든지 문의해 주세요
           </p>
         </div>
-        
+
         <Accordion type="single" collapsible className="w-full space-y-4">
           {faqs.map((faq, index) => (
-            <AccordionItem 
-              key={index} 
+            <AccordionItem
+              key={index}
               value={`item-${index}`}
               className="bg-white rounded-lg border px-6"
             >
@@ -387,7 +387,7 @@ export default function FinalCTA() {
           <p className="text-lg sm:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
             14일 무료 체험으로 모든 기능을 경험해보세요
           </p>
-          
+
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 mb-8 text-gray-700">
             <div className="flex items-center gap-2">
               <CheckCircle className="w-5 h-5 text-green-600" />
@@ -398,7 +398,7 @@ export default function FinalCTA() {
               <span>신용카드 불필요</span>
             </div>
           </div>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="text-lg px-8 py-6">
               무료로 시작하기
@@ -433,7 +433,7 @@ export default function Footer() {
               <p>02-1234-5678</p>
             </div>
           </div>
-          
+
           <div>
             <h3 className="font-bold text-lg mb-4">법적 고지</h3>
             <ul className="space-y-2 text-sm text-gray-400">
@@ -442,9 +442,9 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        
+
         <Separator className="bg-gray-800 mb-8" />
-        
+
         <div className="text-center">
           <p className="text-sm text-gray-400">
             &copy; 2024 Company Name. All rights reserved.
