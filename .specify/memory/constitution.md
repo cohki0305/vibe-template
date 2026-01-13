@@ -157,6 +157,19 @@ type ActionResult<T> =
 
 **根拠**: ランタイムエラーをコンパイル時に検出し、堅牢なアプリケーションを構築。
 
+### VI-b. 自動生成コマンドの活用
+
+公式CLIや生成コマンドがあるツールは、**0から手書きせず生成コマンドを使用**する。
+
+| ツール | コマンド例 |
+|--------|-----------|
+| Prisma | `pnpm prisma init`, `pnpm prisma generate`, `pnpm prisma migrate dev` |
+| Better Auth | `pnpm dlx @better-auth/cli generate` |
+| shadcn/ui | `pnpm dlx shadcn@latest add [component]` |
+| Next.js | `pnpm create next-app` |
+
+**根拠**: 公式コマンドにより正しい設定・ボイラープレートを確実に生成し、ヒューマンエラーを防止。
+
 ### VII. 認証・セキュリティ
 
 - **Better Auth**: 認証ライブラリとして使用
