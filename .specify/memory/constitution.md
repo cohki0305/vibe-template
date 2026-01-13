@@ -288,6 +288,7 @@ if (!result.success) {
 
 | カテゴリ | 技術 | 用途 |
 |---------|------|------|
+| Package Manager | pnpm | パッケージ管理 |
 | Framework | Next.js (App Router) | フルスタックReactフレームワーク |
 | Styling | Tailwind CSS | ユーティリティファーストCSS |
 | UI Components | shadcn/ui | アクセシブルなUIコンポーネント |
