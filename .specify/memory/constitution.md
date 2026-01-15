@@ -83,35 +83,36 @@ UIコンポーネントは**Presentational Component**と**Container Component**
 
 フォントサイズは**1.250（Major Third）**のスケールに従う：
 
-| Token | Size | Line Height | 用途 |
-|-------|------|-------------|------|
-| `text-xs` | 12px (0.75rem) | 1.5 | キャプション、補足 |
-| `text-sm` | 14px (0.875rem) | 1.5 | 小さめの本文 |
-| `text-base` | 16px (1rem) | 1.5 | 本文 |
-| `text-lg` | 18px (1.125rem) | 1.4 | 強調テキスト |
-| `text-xl` | 20px (1.25rem) | 1.4 | 小見出し |
-| `text-2xl` | 24px (1.5rem) | 1.3 | 見出しH3 |
-| `text-3xl` | 30px (1.875rem) | 1.25 | 見出しH2 |
-| `text-4xl` | 36px (2.25rem) | 1.2 | 見出しH1 |
-| `text-5xl` | 48px (3rem) | 1.1 | ヒーローテキスト |
+| Token       | Size            | Line Height | 用途               |
+| ----------- | --------------- | ----------- | ------------------ |
+| `text-xs`   | 12px (0.75rem)  | 1.5         | キャプション、補足 |
+| `text-sm`   | 14px (0.875rem) | 1.5         | 小さめの本文       |
+| `text-base` | 16px (1rem)     | 1.5         | 本文               |
+| `text-lg`   | 18px (1.125rem) | 1.4         | 強調テキスト       |
+| `text-xl`   | 20px (1.25rem)  | 1.4         | 小見出し           |
+| `text-2xl`  | 24px (1.5rem)   | 1.3         | 見出しH3           |
+| `text-3xl`  | 30px (1.875rem) | 1.25        | 見出しH2           |
+| `text-4xl`  | 36px (2.25rem)  | 1.2         | 見出しH1           |
+| `text-5xl`  | 48px (3rem)     | 1.1         | ヒーローテキスト   |
 
 #### スペーシング（マージン比率）
 
 **4pxベースグリッド**を使用し、8の倍数を推奨：
 
-| Token | Value | 用途 |
-|-------|-------|------|
-| `space-1` | 4px | 最小間隔 |
-| `space-2` | 8px | 要素内パディング（小） |
-| `space-3` | 12px | 要素内パディング（中） |
-| `space-4` | 16px | 要素間マージン（小） |
-| `space-6` | 24px | 要素間マージン（中） |
-| `space-8` | 32px | セクション間（小） |
-| `space-12` | 48px | セクション間（中） |
-| `space-16` | 64px | セクション間（大） |
-| `space-24` | 96px | ページセクション間 |
+| Token      | Value | 用途                   |
+| ---------- | ----- | ---------------------- |
+| `space-1`  | 4px   | 最小間隔               |
+| `space-2`  | 8px   | 要素内パディング（小） |
+| `space-3`  | 12px  | 要素内パディング（中） |
+| `space-4`  | 16px  | 要素間マージン（小）   |
+| `space-6`  | 24px  | 要素間マージン（中）   |
+| `space-8`  | 32px  | セクション間（小）     |
+| `space-12` | 48px  | セクション間（中）     |
+| `space-16` | 64px  | セクション間（大）     |
+| `space-24` | 96px  | ページセクション間     |
 
 **コンポーネント内パディング規則**:
+
 - カード: `p-4` または `p-6`
 - ボタン: `px-4 py-2` (default), `px-3 py-1.5` (sm), `px-6 py-3` (lg)
 - 入力フィールド: `px-3 py-2`
@@ -161,12 +162,12 @@ type ActionResult<T> =
 
 公式CLIや生成コマンドがあるツールは、**0から手書きせず生成コマンドを使用**する。
 
-| ツール | コマンド例 |
-|--------|-----------|
-| Prisma | `pnpm prisma init`, `pnpm prisma generate`, `pnpm prisma migrate dev` |
-| Better Auth | `pnpm dlx @better-auth/cli generate` |
-| shadcn/ui | `pnpm dlx shadcn@latest add [component]` |
-| Next.js | `pnpm create next-app` |
+| ツール      | コマンド例                                                            |
+| ----------- | --------------------------------------------------------------------- |
+| Prisma      | `pnpm prisma init`, `pnpm prisma generate`, `pnpm prisma migrate dev` |
+| Better Auth | `pnpm dlx @better-auth/cli generate`                                  |
+| shadcn/ui   | `pnpm dlx shadcn@latest add [component]`                              |
+| Next.js     | `pnpm create next-app`                                                |
 
 **根拠**: 公式コマンドにより正しい設定・ボイラープレートを確実に生成し、ヒューマンエラーを防止。
 
@@ -208,16 +209,30 @@ function Form() {
 
 ### IX. 状態管理
 
-- **基本方針**: Server Componentsでデータ取得 → propsで渡す
+- **データフェッチ**: SWRを使用してクライアント側でデータ取得・キャッシュ管理
 - **クライアント状態**: `useState` で局所的に管理（最小限に）
 - **Jotai（必要な場合のみ）**: 複数コンポーネント間で共有が必要なUI状態（テーマ、モーダル等）
 
 ```typescript
-// 基本: propsで渡す
-// Server Component
-async function Page() {
-  const data = await fetchData()
-  return <ClientComponent data={data} />
+// SWRでデータフェッチ
+import useSWR from 'swr'
+import { getUsers, createUserAction, deleteUser } from '@/actions/user'
+
+function UserPageView() {
+  const { data: users, error, isLoading, mutate } = useSWR('users', getUsers)
+
+  const handleCreate = async (formData: FormData) => {
+    const result = await createUserAction(prevState, formData)
+    if (result.success) {
+      mutate() // キャッシュを更新 → 自動で再フェッチ
+    }
+    return result
+  }
+
+  const handleDelete = async (id: string) => {
+    await deleteUser(id)
+    mutate()
+  }
 }
 
 // 必要な場合のみJotai（例: テーマ切り替え）
@@ -225,7 +240,7 @@ async function Page() {
 export const themeAtom = atom<'light' | 'dark'>('light')
 ```
 
-**根拠**: Server Componentsを活用し、クライアント状態を最小化することでシンプルさを維持。
+**根拠**: SWRによりキャッシュ管理・再フェッチ・ローディング状態が自動化され、手動のstate管理が不要になる。
 
 ### X. エラーハンドリング
 
@@ -256,16 +271,16 @@ if (!result.success) {
 
 #### 命名規則
 
-| 対象 | 規則 | 例 |
-|------|------|-----|
-| コンポーネント | PascalCase | `UserProfile.tsx` |
-| フック | camelCase + use prefix | `useAuth.ts` |
-| ユーティリティ | camelCase | `formatDate.ts` |
-| 定数 | SCREAMING_SNAKE_CASE | `MAX_RETRY_COUNT` |
-| 型/インターフェース | PascalCase | `UserData`, `AuthState` |
-| Zodスキーマ | camelCase + Schema suffix | `userSchema`, `loginFormSchema` |
-| Server Actions | camelCase + Action suffix | `createUserAction`, `updateProfileAction` |
-| Jotai Atom | camelCase + Atom suffix | `userAtom`, `themeAtom` |
+| 対象                | 規則                      | 例                                        |
+| ------------------- | ------------------------- | ----------------------------------------- |
+| コンポーネント      | PascalCase                | `UserProfile.tsx`                         |
+| フック              | camelCase + use prefix    | `useAuth.ts`                              |
+| ユーティリティ      | camelCase                 | `formatDate.ts`                           |
+| 定数                | SCREAMING_SNAKE_CASE      | `MAX_RETRY_COUNT`                         |
+| 型/インターフェース | PascalCase                | `UserData`, `AuthState`                   |
+| Zodスキーマ         | camelCase + Schema suffix | `userSchema`, `loginFormSchema`           |
+| Server Actions      | camelCase + Action suffix | `createUserAction`, `updateProfileAction` |
+| Jotai Atom          | camelCase + Atom suffix   | `userAtom`, `themeAtom`                   |
 
 #### ESLint/Prettier
 
@@ -299,20 +314,21 @@ if (!result.success) {
 
 ## 技術スタック
 
-| カテゴリ | 技術 | 用途 |
-|---------|------|------|
-| Package Manager | pnpm | パッケージ管理 |
-| Framework | Next.js (App Router) | フルスタックReactフレームワーク |
-| Styling | Tailwind CSS | ユーティリティファーストCSS |
-| UI Components | shadcn/ui | アクセシブルなUIコンポーネント |
-| Validation | Zod | スキーマ検証 |
-| Form | useActionState + react-hook-form (optional) | フォーム状態管理 |
-| State Management | Jotai (optional) | グローバルUI状態（必要時のみ） |
-| ORM | Prisma | データベースアクセス |
-| Authentication | Better Auth | 認証・認可 |
-| Payment | Stripe | 課金・決済 |
-| Testing | Vitest + RTL | ユニット・コンポーネントテスト |
-| Linting | ESLint + Prettier | コード品質・フォーマット |
+| カテゴリ         | 技術                                        | 用途                            |
+| ---------------- | ------------------------------------------- | ------------------------------- |
+| Package Manager  | pnpm                                        | パッケージ管理                  |
+| Framework        | Next.js (App Router)                        | フルスタックReactフレームワーク |
+| Styling          | Tailwind CSS                                | ユーティリティファーストCSS     |
+| UI Components    | shadcn/ui                                   | アクセシブルなUIコンポーネント  |
+| Validation       | Zod                                         | スキーマ検証                    |
+| Form             | useActionState + react-hook-form (optional) | フォーム状態管理                |
+| Data Fetching    | SWR                                         | データフェッチ・キャッシュ管理  |
+| State Management | Jotai (optional)                            | グローバルUI状態（必要時のみ）  |
+| ORM              | Prisma                                      | データベースアクセス            |
+| Authentication   | Better Auth                                 | 認証・認可                      |
+| Payment          | Stripe                                      | 課金・決済                      |
+| Testing          | Vitest + RTL                                | ユニット・コンポーネントテスト  |
+| Linting          | ESLint + Prettier                           | コード品質・フォーマット        |
 
 ## デザインシステム規約
 

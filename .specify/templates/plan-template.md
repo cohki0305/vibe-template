@@ -30,22 +30,22 @@
 
 ## Constitution Check
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+_GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 
-| Principle | Requirement | Status |
-|-----------|-------------|--------|
-| I. TDD | テストを先に書いてから実装する | [ ] |
-| II. Presentational Component分離 | Presentationalはsrc/components/、Containerはsrc/views/に配置 | [ ] |
-| III. デザインシステム | 色彩・タイポグラフィ・スペーシングルールに準拠 | [ ] |
-| IV. Next.js ベストプラクティス | App Router、Server Components優先、Route Groups使用 | [ ] |
-| V. Server Actions | Server Actions基本、API RoutesはWebhook等のみ、Zodバリデーション必須 | [ ] |
-| VI. 型安全性 | TypeScript Strict Mode、Prisma型活用 | [ ] |
-| VII. 認証 | Better Auth使用、CSRF保護 | [ ] |
-| VIII. フォーム管理 | useActionState基本、react-hook-formは複雑なフォームのみ | [ ] |
-| IX. 状態管理 | Server Components + props基本、Jotaiは必要時のみ | [ ] |
-| X. エラーハンドリング | error.tsx + toast通知、ActionResult型 | [ ] |
-| XI. コード規約 | 命名規則遵守、ESLint/Prettier設定 | [ ] |
-| XII. 実装後レビュー | pr-review-toolkitでレビュー実行 | [ ] |
+| Principle                        | Requirement                                                          | Status |
+| -------------------------------- | -------------------------------------------------------------------- | ------ |
+| I. TDD                           | テストを先に書いてから実装する                                       | [ ]    |
+| II. Presentational Component分離 | Presentationalはsrc/components/、Containerはsrc/views/に配置         | [ ]    |
+| III. デザインシステム            | 色彩・タイポグラフィ・スペーシングルールに準拠                       | [ ]    |
+| IV. Next.js ベストプラクティス   | App Router、Server Components優先、Route Groups使用                  | [ ]    |
+| V. Server Actions                | Server Actions基本、API RoutesはWebhook等のみ、Zodバリデーション必須 | [ ]    |
+| VI. 型安全性                     | TypeScript Strict Mode、Prisma型活用                                 | [ ]    |
+| VII. 認証                        | Better Auth使用、CSRF保護                                            | [ ]    |
+| VIII. フォーム管理               | useActionState基本、react-hook-formは複雑なフォームのみ              | [ ]    |
+| IX. 状態管理                     | Server Components + props基本、Jotaiは必要時のみ                     | [ ]    |
+| X. エラーハンドリング            | error.tsx + toast通知、ActionResult型                                | [ ]    |
+| XI. コード規約                   | 命名規則遵守、ESLint/Prettier設定                                    | [ ]    |
+| XII. 実装後レビュー              | pr-review-toolkitでレビュー実行                                      | [ ]    |
 
 ## Project Structure
 
@@ -62,6 +62,7 @@ specs/[###-feature]/
 ```
 
 ### Source Code (repository root)
+
 <!--
   Next.js App Router プロジェクト構造（Constitution準拠）
 -->
@@ -109,7 +110,7 @@ directories captured above]
 
 > **Fill ONLY if Constitution Check has violations that must be justified**
 
-| Violation | Why Needed | Simpler Alternative Rejected Because |
-|-----------|------------|-------------------------------------|
-| [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
-| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
+| Violation                  | Why Needed         | Simpler Alternative Rejected Because |
+| -------------------------- | ------------------ | ------------------------------------ |
+| [e.g., 4th project]        | [current need]     | [why 3 projects insufficient]        |
+| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient]  |
